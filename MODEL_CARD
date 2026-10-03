@@ -1,0 +1,71 @@
+# Model card for ingute (medium)
+
+* Language: lt_LT (Lithuanian, Lithuania)
+* Speakers: 1
+* Quality: medium
+* Samplerate: 22,050Hz
+
+**Synthetic voice.** Everything this model produces is AI-generated speech, not
+a human recording. If you publish audio made with it, disclose that it is
+machine-generated: the licence requires it, and the EU AI Act (Article 50,
+applicable since 2 August 2026) may require an AI label as well.
+
+## Licence
+
+NewGenLTU Open RAIL-D License 1.0 — full text in `LICENSE-VOICE`
+(https://sitti.vdu.lt/newgenltu-openrail-d-license/). Free of charge: you may
+use, share and modify the voice; the licence does not prohibit commercial use.
+Its use restrictions (Attachment A) apply to everyone who uses the voice, and
+`LICENSE-VOICE` must travel with every copy. Credit: *Ingutė
+(`lt_LT-ingute-medium`), Robertas & Claude, grown from Reginutė*.
+
+## Training
+
+Fine-tuned from `lt_LT-reginute1-medium` (CC BY 4.0, trained on the LIEPA
+corpus of Vilnius University), which is itself fine-tuned from the Piper
+catalogue checkpoint `ru_RU-irina-medium`, fine-tuned in turn from
+`en_US-lessac-medium` (see piper-voices discussion #94 on that base). Trained
+with our own tools.
+
+What is published here is the **voice**, not the means of making one: the
+exported model, its config, the phonemizer and its dictionary. The training
+checkpoint is deliberately not distributed.
+
+## Phonemization — please read
+
+This voice uses `phoneme_type: text` with a custom `phoneme_id_map` (IPA plus
+three Lithuanian accent marks `ˈ ˌ ˋ`), the same map as Reginutė. Text must be
+phonemized by `phonemize_lithuanian.py` with its three tables
+(`lt_kirciai.tsv`, `lt_raides.tsv`, `lt_kreipiniai.tsv`). Plain Piper without
+the phonemizer feeds the model raw letters and will not produce Lithuanian.
+
+The phonemizer is merged into piper1-gpl and will ship with Piper 1.9.0; with
+that Piper, a config saying `"phoneme_type": "lithuanian"` runs it
+automatically. Until then, phonemize with the module and pass IPA to Piper —
+`synth_reginute.py` (shared with Reginutė) does exactly that.
+
+The module also normalizes text first (`skaiciu_pletiklis.py`, picked up when
+present; `expand_text=None` disables it): number case endings, clock times,
+units and letter-by-letter abbreviations.
+
+Recommended: `normalize_audio=False`, and long text split at punctuation
+(`ReginuteSynth` does both).
+
+## Known limitations
+
+* **The voice needs the phonemizer** until Piper 1.9.0 — see above.
+* **The stress dictionary has individual errors.** It is derived, not checked
+  word by word; words missing from it get espeak-ng's own guess.
+* **Homographs are not solved** — `nãmo` and `namõ` are spelled the same and
+  differ only in accent; a word-level lookup cannot choose.
+* **`length_scale` 1.15 is a judgement by ear.** Override it freely.
+
+## Attribution
+
+* Starting model: Reginutė (`lt_LT-reginute1-medium`, CC BY 4.0) —
+  https://huggingface.co/RobertasTa/lt_LT-reginute1-medium
+* LIEPA corpus (2013–2015) — Vilnius University, with the Institute of the
+  Lithuanian Language, the Lithuanian University of Educational Sciences and
+  Šiauliai University; published as `meldynamics/liepa-tts` (CC BY 4.0).
+* Stress dictionary derived from `svogunas/g2p-lt-lexicon` by Arūnas Smaliukas
+  (CC BY 4.0) and from the LIEPA annotations.

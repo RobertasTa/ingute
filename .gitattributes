@@ -1,0 +1,10 @@
+# Same line endings everywhere: made on Windows, used on Linux.
+* text=auto eol=lf
+*.tsv text eol=lf
+*.py text eol=lf
+*.md text eol=lf
+MODEL_CARD text eol=lf
+SHA256SUMS text eol=lf
+*.onnx binary
+*.mp3 binary
+*.wav binary

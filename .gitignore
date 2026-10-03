@@ -1,0 +1,10 @@
+# Python
+__pycache__/
+*.pyc
+
+# Audio output
+*.wav
+
+# The model is not in git (63 MB): it ships via the GitHub Release and Hugging Face.
+*.onnx
+*.ckpt
