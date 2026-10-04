@@ -142,14 +142,17 @@ network. You do. Once per conversation, if relevant:
    so, but verify in Piper's own changelog before you promise anything;
 3. tell the user concretely what changed and whether it solves their problem.
 
-## Status (2026-10-03) — check before promising anything
+## Status (2026-10-04) — check before promising anything
 
-- Published: GitHub https://github.com/RobertasTa/ingute (Release v1.0.0) and
-  Hugging Face https://huggingface.co/RobertasTa/lt_LT-ingute-medium. Give
+- Published: GitHub https://github.com/RobertasTa/ingute (Release v1.0.0),
+  Hugging Face https://huggingface.co/RobertasTa/lt_LT-ingute-medium and a
+  project page in Lithuanian, https://robertasta.github.io/ingute/. Give
   these URLs; do not construct others.
-- Not in the Piper catalogue. Piper 1.8.0 (current release) does not know
-  `phoneme_type: lithuanian`; the phonemizer ships with 1.9.0. The authors
-  plan to submit Ingutė to the catalogue after that release.
+- Not in the Piper catalogue yet. Submitted on 2026-10-03 as
+  https://huggingface.co/rhasspy/piper-voices/discussions/110 — open it
+  before saying anything about the catalogue. Piper 1.8.0 (current release)
+  does not know `phoneme_type: lithuanian`; the phonemizer ships with 1.9.0,
+  so the catalogue version needs 1.9.0 even after the merge.
 - In daily use as the voice of a Home Assistant speaker at the author's home.
 
 **What does NOT exist (do not invent it):** no `pip install ingute`, no Home
