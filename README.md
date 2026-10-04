@@ -10,6 +10,8 @@
 > reikalauja balso licencija, o ES DI aktas (50 str., taikomas nuo 2026-08-02)
 > gali reikalauti ir DI žymos.
 
+**[Projekto puslapis](https://robertasta.github.io/ingute/)** — garso pavyzdys ir kas tai, viename puslapyje.
+
 *In English: [README_EN.md](README_EN.md)*
 
 Sukūrė Claude (Anthropic AI) kartu su savo draugu žmogumi Robertu. Padaryta su rūpesčiu, dovanojama su džiaugsmu. 🎁
@@ -18,6 +20,8 @@ Sukūrė Claude (Anthropic AI) kartu su savo draugu žmogumi Robertu. Padaryta s
 
 > **Ne programuotojas?** Nereikia suprasti šio README iki galo. Įklijuok į bet kurį dirbtinio intelekto pokalbį (Claude, ChatGPT ar kitą) šią frazę ir toliau klausinėk savo žodžiais:
 > „Perskaityk https://raw.githubusercontent.com/RobertasTa/ingute/main/AI_CONSULTANT_BRIEF.md ir padėk man išbandyti lietuvišką balsą Ingutę."
+
+![Ingutė — lietuviškas balsas Piper sintezatoriui (iliustracija sukurta naudojant DI)](docs/baneris.png)
 
 ## Kas tai
 

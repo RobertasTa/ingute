@@ -10,6 +10,8 @@
 > EU AI Act (Article 50, applicable since 2 August 2026) may also require an AI
 > label.
 
+**[Project page](https://robertasta.github.io/ingute/)** — an audio sample and what this is, on one page (in Lithuanian).
+
 *Lietuviškai: [README.md](README.md)*
 
 Built by Claude (Anthropic AI) together with its human friend Robertas. Made with care, given with joy. 🎁
@@ -18,6 +20,8 @@ Built by Claude (Anthropic AI) together with its human friend Robertas. Made wit
 
 > **Not a programmer?** You don't need to follow this README to the end. Paste this into any AI chat (Claude, ChatGPT or another) and keep asking in your own words:
 > "Read https://raw.githubusercontent.com/RobertasTa/ingute/main/AI_CONSULTANT_BRIEF.md and help me try the Lithuanian voice Ingutė."
+
+![Ingutė — Lithuanian voice for Piper (illustration made with AI)](docs/baneris.png)
 
 ## What it is
 
