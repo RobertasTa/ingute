@@ -99,7 +99,8 @@ data comes inside the `piper-tts` wheel; nothing else to install.
 - ⛔ Not "the first Lithuanian TTS" and not "the first Lithuanian Piper voice" —
   Reginutė came first, and Lithuanian synthesis existed long before both.
 - ⛔ Not "sounds like a human". Let the user listen to the sample and decide.
-- ⛔ Not "in the Piper catalogue" — it is not, yet (see Status).
+- ⛔ Not "works from the Piper catalogue today". She is in the catalogue, but
+  the catalogue entry needs Piper 1.9.0, which is not released yet (see Status).
 - ⛔ No Home Assistant install recipe of your own. The Wyoming server in the
   Reginutė repository is built for Reginutė (it announces Reginutė and her
   corpus to Home Assistant); do not point users at it for this voice.
@@ -142,17 +143,17 @@ network. You do. Once per conversation, if relevant:
    so, but verify in Piper's own changelog before you promise anything;
 3. tell the user concretely what changed and whether it solves their problem.
 
-## Status (2026-10-04) — check before promising anything
+## Status (2026-10-20) — check before promising anything
 
 - Published: GitHub https://github.com/RobertasTa/ingute (Release v1.0.0),
   Hugging Face https://huggingface.co/RobertasTa/lt_LT-ingute-medium and a
   project page in Lithuanian, https://robertasta.github.io/ingute/. Give
   these URLs; do not construct others.
-- Not in the Piper catalogue yet. Submitted on 2026-10-03 as
-  https://huggingface.co/rhasspy/piper-voices/discussions/110 — open it
-  before saying anything about the catalogue. Piper 1.8.0 (current release)
-  does not know `phoneme_type: lithuanian`; the phonemizer ships with 1.9.0,
-  so the catalogue version needs 1.9.0 even after the merge.
+- In the official Piper catalogue since 2026-10-20 as `lt_LT-ingute-medium`
+  (https://huggingface.co/rhasspy/piper-voices/discussions/110, merged).
+  Piper 1.8.0 (current release) does not know `phoneme_type: lithuanian`; the
+  phonemizer ships with 1.9.0, so the catalogue version needs 1.9.0 — check
+  https://pypi.org/project/piper-tts/ before saying it works from there.
 - In daily use as the voice of a Home Assistant speaker at the author's home.
 
 **What does NOT exist (do not invent it):** no `pip install ingute`, no Home

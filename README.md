@@ -90,9 +90,9 @@ skaido ties skyryba; visas straipsnis viena seka suvalgo daug atminties.
 ## Home Assistant
 
 Piper 1.9.0 ateis su lietuvišku fonemizatoriumi viduje (jis jau įlietas į
-`piper1-gpl`). Ingutė jau pateikta į oficialų Piper katalogą — kai 1.9.0
-išeis, ji turėtų atsirasti Home Assistant Piper priede be jokių papildomų
-failų. Iki tol — Python kelias aukščiau.
+`piper1-gpl`). Ingutė nuo 2026-10-20 yra oficialiame Piper kataloge
+(`lt_LT-ingute-medium`) — kai 1.9.0 išeis, ji turėtų atsirasti Home Assistant
+Piper priede be jokių papildomų failų. Iki tol — Python kelias aukščiau.
 
 ## Žinomos ribos
 

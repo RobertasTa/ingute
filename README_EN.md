@@ -92,9 +92,10 @@ memory.
 ## Home Assistant
 
 Piper 1.9.0 will ship with the Lithuanian phonemizer built in (it is already
-merged into `piper1-gpl`). Ingutė has already been submitted to the official
-Piper catalogue; once 1.9.0 is released, she should appear in the Home Assistant
-Piper add-on with no extra files. Until then, use the Python path above.
+merged into `piper1-gpl`). Ingutė has been in the official Piper catalogue as
+`lt_LT-ingute-medium` since 2026-10-20; once 1.9.0 is released, she should appear
+in the Home Assistant Piper add-on with no extra files. Until then, use the
+Python path above.
 
 ## Known limitations
 
