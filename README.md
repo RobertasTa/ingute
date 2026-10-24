@@ -93,11 +93,42 @@ skaido ties skyryba; visas straipsnis viena seka suvalgo daug atminties.
 **Jau dabar — per Wyoming, apie 5 minutes.** Ingutė prijungiama kaip atskira
 Wyoming tarnyba šalia jūsų esamo Piper priedo; nieko esamo neliečia.
 
+Bet koks Linux, root'u (kitaip — su `sudo`); išbandyta švariame Ubuntu 24.04 konteineryje, 2 branduoliai, 2 GB:
+
 ```bash
-pip install piper-tts==1.8.0 wyoming
-# į vieną katalogą: visi šio repo failai + lt_LT-ingute-medium.onnx (Release arba Hugging Face)
-python3 wyoming_reginute.py --model lt_LT-ingute-medium.onnx --uri tcp://0.0.0.0:10250
+apt install -y python3-venv
+python3 -m venv /opt/ingute/venv
+/opt/ingute/venv/bin/pip install piper-tts==1.8.0 wyoming huggingface_hub
+# visi balso failai ir serveris — iš Hugging Face (~65 MB)
+/opt/ingute/venv/bin/python -c "from huggingface_hub import snapshot_download as s; s('RobertasTa/lt_LT-ingute-medium', local_dir='/opt/ingute/voice')"
+# bandymui
+/opt/ingute/venv/bin/python /opt/ingute/voice/wyoming_reginute.py --model /opt/ingute/voice/lt_LT-ingute-medium.onnx --uri tcp://0.0.0.0:10250
 ```
+
+Visada leiskite **venv'o** Pythonu (pilnu keliu, kaip aukščiau): jei `pip` įdiegė į vieną
+Python, o `python3` yra kitas, gausite `No module named 'piper'`, nors `piper-tts` įdiegtas.
+Kad pasileistų pati — `/etc/systemd/system/ingute.service`:
+
+```ini
+[Unit]
+Description=Ingute - Lithuanian Piper voice over Wyoming
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/opt/ingute/venv/bin/python /opt/ingute/voice/wyoming_reginute.py --model /opt/ingute/voice/lt_LT-ingute-medium.onnx --uri tcp://0.0.0.0:10250
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+systemctl daemon-reload && systemctl enable --now ingute
+```
+
+Įspėjimas `onnxruntime … pthread_setaffinity_np failed` konteinerio žurnale — nekenksmingas.
 
 Paleidus žurnale turi būti:
 `ingute klauso tcp://0.0.0.0:10250 (tempas 1.15 iš konfigo, plėtiklis: taip)`.

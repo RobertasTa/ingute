@@ -96,11 +96,42 @@ memory.
 Wyoming service beside your existing Piper add-on; nothing that already works is
 touched.
 
+Any Linux, as root (otherwise with `sudo`); tested on a clean Ubuntu 24.04 container, 2 cores, 2 GB:
+
 ```bash
-pip install piper-tts==1.8.0 wyoming
-# in one folder: every file of this repository + lt_LT-ingute-medium.onnx (Release or Hugging Face)
-python3 wyoming_reginute.py --model lt_LT-ingute-medium.onnx --uri tcp://0.0.0.0:10250
+apt install -y python3-venv
+python3 -m venv /opt/ingute/venv
+/opt/ingute/venv/bin/pip install piper-tts==1.8.0 wyoming huggingface_hub
+# every voice file and the server — from Hugging Face (~65 MB)
+/opt/ingute/venv/bin/python -c "from huggingface_hub import snapshot_download as s; s('RobertasTa/lt_LT-ingute-medium', local_dir='/opt/ingute/voice')"
+# to try it
+/opt/ingute/venv/bin/python /opt/ingute/voice/wyoming_reginute.py --model /opt/ingute/voice/lt_LT-ingute-medium.onnx --uri tcp://0.0.0.0:10250
 ```
+
+Always run the **venv's** Python (by full path, as above): if `pip` installed into one
+Python and `python3` is another, you get `No module named 'piper'` although `piper-tts`
+is installed. To have it start by itself — `/etc/systemd/system/ingute.service`:
+
+```ini
+[Unit]
+Description=Ingute - Lithuanian Piper voice over Wyoming
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=/opt/ingute/venv/bin/python /opt/ingute/voice/wyoming_reginute.py --model /opt/ingute/voice/lt_LT-ingute-medium.onnx --uri tcp://0.0.0.0:10250
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+```bash
+systemctl daemon-reload && systemctl enable --now ingute
+```
+
+The warning `onnxruntime … pthread_setaffinity_np failed` in a container's log is harmless.
 
 The log should say
 `ingute klauso tcp://0.0.0.0:10250 (tempas 1.15 iš konfigo, plėtiklis: taip)`
