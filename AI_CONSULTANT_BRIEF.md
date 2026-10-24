@@ -69,6 +69,7 @@ speak Lithuanian. That is the design, not a bug.
 | `phonemize_lithuanian.py` + `lt_kirciai.tsv`, `lt_raides.tsv`, `lt_kreipiniai.tsv` | phonemizer and its tables — required |
 | `skaiciu_pletiklis.py` + `zodziai_trumpi.txt` | number / time / abbreviation expander — optional, strongly recommended |
 | `synth_reginute.py` | `ReginuteSynth` wrapper — shared with Reginutė, hence the name |
+| `wyoming_reginute.py` | Wyoming TTS server for Home Assistant (port 10250 by default). Since 2026-10-24 takes `length_scale` from the config and the voice name from the model file (`ingute`); before that it defaulted to 1.30 and `reginute1` for every voice |
 
 - `phonemize_lithuanian.LithuanianPhonemizer()` — `phonemize(text)` returns
   phonemes grouped by sentence (Piper's shape).
@@ -92,6 +93,10 @@ data comes inside the `piper-tts` wheel; nothing else to install.
 | Distorted, clipped loud passages | `normalize_audio=True` (Piper's default) | `ReginuteSynth` sets it `False`; keep it |
 | Numbers with wrong endings | expander missing | keep `skaiciu_pletiklis.py` + `zodziai_trumpi.txt` beside the model |
 | Speaks too slowly | Reginutė's 1.30 default used | pass `length_scale=voice.config.length_scale` |
+| Stretched, "robotic" in Home Assistant | `wyoming_reginute.py` from before 2026-10-24 gave every voice 1.30 | use this repo's server, or `--length-scale 1.15`; the log must say `tempas 1.15` |
+| Gentle stutter between phrases on a Voice PE / speaker | synthesis on the CPU slower than playback: the server streams phrase by phrase. Measured margin is tenfold on 2 Ryzen cores (16 s of speech in 1.8 s), so suspect a **busy** CPU — e.g. Ollama spilling to CPU (`ollama ps` → PROCESSOR not `100% GPU`) | give the voice its own cores; Piper never uses the GPU here |
+| Other voices stutter too | Wi-Fi to the speaker, not the voice | test with any other Piper voice |
+| Server exits with `phoneme_type='lithuanian'` | config from the Piper catalogue (for Piper 1.9.0+) | use the config from this repository (`phoneme_type: text`) |
 | Memory spikes on long text | whole text sent as one sequence | go through `ReginuteSynth`, which splits at punctuation |
 
 ## Things you must NOT claim

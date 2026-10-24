@@ -48,6 +48,7 @@ The model (`.onnx`, 63 MB) is in the
 | `lt_kirciai.tsv`, `lt_raides.tsv`, `lt_kreipiniai.tsv` | Stress dictionary, letter names and vocatives — the phonemizer's tables. |
 | `skaiciu_pletiklis.py` + `zodziai_trumpi.txt` | Numbers, clock times, units and abbreviations, with the right case endings. |
 | `synth_reginute.py` | Synthesis wrapper: splits at punctuation, trims silence, `normalize_audio=False`. Named after Reginutė; the two sisters share it. |
+| `wyoming_reginute.py` | Wyoming service for Home Assistant (shared by both sisters): takes speed and voice name from the model and its config. See "Home Assistant". |
 | `samples/speaker_0.mp3` | Audio sample. |
 | `SHA256SUMS` | Checksums of every voice file. |
 | `LICENSE-VOICE`, `LICENSE` | Voice and code licences — see below. |
@@ -91,11 +92,38 @@ memory.
 
 ## Home Assistant
 
-Piper 1.9.0 will ship with the Lithuanian phonemizer built in (it is already
-merged into `piper1-gpl`). Ingutė has been in the official Piper catalogue as
-`lt_LT-ingute-medium` since 2026-10-20; once 1.9.0 is released, she should appear
-in the Home Assistant Piper add-on with no extra files. Until then, use the
-Python path above.
+**Today — through Wyoming, about five minutes.** Ingutė runs as a separate
+Wyoming service beside your existing Piper add-on; nothing that already works is
+touched.
+
+```bash
+pip install piper-tts==1.8.0 wyoming
+# in one folder: every file of this repository + lt_LT-ingute-medium.onnx (Release or Hugging Face)
+python3 wyoming_reginute.py --model lt_LT-ingute-medium.onnx --uri tcp://0.0.0.0:10250
+```
+
+The log should say
+`ingute klauso tcp://0.0.0.0:10250 (tempas 1.15 iš konfigo, plėtiklis: taip)`
+("listening… speed 1.15 from the config"). In Home Assistant: **Settings →
+Devices & Services → Add integration → Wyoming Protocol**, the host and port
+10250 — the voice appears as `ingute`; pick it as the text-to-speech engine of
+your Assist pipeline. Speed and voice name come from the model and its config;
+there is nothing to set.
+
+Once Piper 1.9.0 is released (the Lithuanian phonemizer is already merged into
+`piper1-gpl`), Ingutė — in the official Piper catalogue since 2026-10-20 —
+should appear in the Home Assistant Piper add-on with no extra files, and this
+server will no longer be needed.
+
+### If she does not sound like the sample
+
+| What you hear | Why | What to do |
+|---|---|---|
+| **Stretched, slow, "robotic"** | Ingutė is speaking at Reginutė's speed (1.30) instead of her own (1.15) — about 13 % slower. That happens with `wyoming_reginute.py` taken from the Reginutė repository before 2026-10-24, which gave every voice 1.30. | Use the server from this repository, or add `--length-scale 1.15`. The log must say "tempas 1.15". |
+| **A gentle stutter between phrases** (Voice PE or another speaker) | The server sends audio phrase by phrase as each one is ready, and Home Assistant starts playing at once. If the CPU has not finished the next phrase when the previous one ends, there is a micro-pause. Piper runs **on the CPU only** — a graphics card does not help it. | At our house a 2-core container (Ryzen 7 8845HS) makes 16 s of speech in 1.8 s — a tenfold margin, so the usual culprit is a **busy** CPU. If Ollama runs on the same machine, `ollama ps` should show `100% GPU` in the PROCESSOR column; if part of it is CPU, the language model did not fit the graphics card and shares the cores with the voice while it answers. Give the voice its own cores or container. |
+| **Other voices stutter too** | Not the voice — the Wi-Fi between the speaker and Home Assistant. | Try any other Piper voice; if it stutters as well, move the speaker or the access point. |
+| The server exits: `phoneme_type='lithuanian'` | The config was taken from the official Piper catalogue, which is meant for Piper 1.9.0+. | This server needs `lt_LT-ingute-medium.onnx.json` from this repository (`phoneme_type: text`). |
+| The voice is called `reginute1` in Home Assistant | An old server from the Reginutė repository. | This repository's server takes the name from the model file (`ingute`); after updating, pick the voice again in your Assist pipeline. |
 
 ## Known limitations
 

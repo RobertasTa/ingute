@@ -47,6 +47,7 @@ arba [Hugging Face](https://huggingface.co/RobertasTa/lt_LT-ingute-medium).
 | `lt_kirciai.tsv`, `lt_raides.tsv`, `lt_kreipiniai.tsv` | Kirčių žodynas, raidžių vardai ir kreipiniai — fonemizatoriaus lentelės. |
 | `skaiciu_pletiklis.py` + `zodziai_trumpi.txt` | Skaičiai, laikas, vienetai ir santrumpos — teisingais linksniais. |
 | `synth_reginute.py` | Sintezės apvalkalas: skaido ties skyryba, kerpa tylą, `normalize_audio=False`. Vardas — nuo Reginutės, apvalkalas bendras abiem seserims. |
+| `wyoming_reginute.py` | Wyoming tarnyba Home Assistant'ui (bendra abiem seserims): tempą ir balso vardą ima iš modelio ir jo konfigo. Žr. „Home Assistant". |
 | `samples/speaker_0.mp3` | Garso pavyzdys. |
 | `SHA256SUMS` | Visų balso failų kontrolinės sumos. |
 | `LICENSE-VOICE`, `LICENSE` | Balso ir kodo licencijos — žr. žemiau. |
@@ -89,10 +90,35 @@ skaido ties skyryba; visas straipsnis viena seka suvalgo daug atminties.
 
 ## Home Assistant
 
-Piper 1.9.0 ateis su lietuvišku fonemizatoriumi viduje (jis jau įlietas į
-`piper1-gpl`). Ingutė nuo 2026-10-20 yra oficialiame Piper kataloge
-(`lt_LT-ingute-medium`) — kai 1.9.0 išeis, ji turėtų atsirasti Home Assistant
-Piper priede be jokių papildomų failų. Iki tol — Python kelias aukščiau.
+**Jau dabar — per Wyoming, apie 5 minutes.** Ingutė prijungiama kaip atskira
+Wyoming tarnyba šalia jūsų esamo Piper priedo; nieko esamo neliečia.
+
+```bash
+pip install piper-tts==1.8.0 wyoming
+# į vieną katalogą: visi šio repo failai + lt_LT-ingute-medium.onnx (Release arba Hugging Face)
+python3 wyoming_reginute.py --model lt_LT-ingute-medium.onnx --uri tcp://0.0.0.0:10250
+```
+
+Paleidus žurnale turi būti:
+`ingute klauso tcp://0.0.0.0:10250 (tempas 1.15 iš konfigo, plėtiklis: taip)`.
+Home Assistant: **Settings → Devices & Services → Add integration → Wyoming
+Protocol**, serverio adresas ir portas 10250 — balsas atsiras kaip `ingute`;
+Assist konvejeryje pasirinkite jį teksto į šneką varikliu. Tempas ir balso
+vardas imami iš modelio ir jo konfigo — nurodyti nieko nereikia.
+
+Kai išeis Piper 1.9.0 (lietuviškas fonemizatorius jau įlietas į `piper1-gpl`),
+Ingutė — oficialiame Piper kataloge nuo 2026-10-20 — turėtų atsirasti Home
+Assistant Piper priede be jokių papildomų failų, ir šio serverio nebereikės.
+
+### Jei skamba ne taip, kaip pavyzdyje
+
+| Ką girdite | Kodėl | Ką daryti |
+|---|---|---|
+| **Ištęstai, lėtai, „robotiškai"** | Ingutė kalba Reginutės tempu (1.30), ne savo (1.15) — ~13 % lėčiau. Taip būna su `wyoming_reginute.py`, paimtu iš Reginutės repo iki 2026-10-24: jis visiems balsams duodavo 1.30. | Imkite serverį iš šio repo arba pridėkite `--length-scale 1.15`. Žurnale turi būti „tempas 1.15". |
+| **Švelniai trūkčioja tarp frazių** (Voice PE ar kita kolonėlė) | Serveris siunčia garsą frazėmis, kai tik kiekviena sukurta, o Home Assistant pradeda groti iš karto. Jei procesorius nespėja sukurti kitos frazės, kol skamba ankstesnė, atsiranda mikro pauzė. Piper sukasi **tik procesoriuje** — vaizdo plokštė jam nepadeda. | Mūsų namuose 2 branduolių konteineris (Ryzen 7 8845HS) 16 s kalbos sukuria per 1,8 s — atsarga dešimteriopa, tad kaltas dažniausiai **užimtas** procesorius. Jei tame pačiame kompe sukasi Ollama, `ollama ps` stulpelis PROCESSOR turi rodyti `100% GPU`: jei dalis — CPU, kalbos modelis netilpo į vaizdo plokštę ir atsakymo metu dalijasi branduoliais su balsu. Duokite balsui savo branduolius ar konteinerį. |
+| **Trūkčioja ir kiti balsai** | Ne balsas, o Wi-Fi tarp kolonėlės ir Home Assistant. | Patikrinkite su bet kuriuo kitu Piper balsu; jei trūkčioja ir jis — kolonėlę ar prieigos tašką arčiau. |
+| Serveris nepasileidžia: `phoneme_type='lithuanian'` | Paimtas konfigas iš oficialaus Piper katalogo — jis skirtas Piper 1.9.0+. | Šiam serveriui reikia `lt_LT-ingute-medium.onnx.json` iš šio repo (`phoneme_type: text`). |
+| Balsas Home Assistant'e vadinasi `reginute1` | Senas serveris iš Reginutės repo. | Šio repo serveris vardą ima iš modelio failo (`ingute`); po atnaujinimo Assist konvejeryje balsą pasirinkite iš naujo. |
 
 ## Žinomos ribos
 
