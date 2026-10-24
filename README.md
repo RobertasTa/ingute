@@ -140,6 +140,10 @@ vardas imami iš modelio ir jo konfigo — nurodyti nieko nereikia.
 Kai išeis Piper 1.9.0 (lietuviškas fonemizatorius jau įlietas į `piper1-gpl`),
 Ingutė — oficialiame Piper kataloge nuo 2026-10-20 — turėtų atsirasti Home
 Assistant Piper priede be jokių papildomų failų, ir šio serverio nebereikės.
+Tai mūsų lūkestis — patikrinsim, kai išeis.
+
+**Ausys** (šneka → tekstas) lietuviškai, procesoriuje — [LT_ausys](https://github.com/RobertasTa/lt-ausys):
+komandai ~0,2 s, prijungiama tuo pačiu Wyoming keliu.
 
 ### Jei skamba ne taip, kaip pavyzdyje
 

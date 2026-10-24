@@ -145,6 +145,10 @@ Once Piper 1.9.0 is released (the Lithuanian phonemizer is already merged into
 `piper1-gpl`), Ingutė — in the official Piper catalogue since 2026-10-20 —
 should appear in the Home Assistant Piper add-on with no extra files, and this
 server will no longer be needed.
+That is our expectation — we will check it when it is out.
+
+**Ears** (speech → text) in Lithuanian, on a CPU — [LT_ausys](https://github.com/RobertasTa/lt-ausys):
+~0.2 s per command, connected the same Wyoming way.
 
 ### If she does not sound like the sample
 
