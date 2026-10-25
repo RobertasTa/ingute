@@ -11,6 +11,9 @@
 <meta property="og:image" content="https://robertasta.github.io/ingute/baneris.png">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="lt_LT">
+<link rel="alternate" hreflang="lt" href="https://robertasta.github.io/ingute/">
+<link rel="alternate" hreflang="en" href="https://robertasta.github.io/ingute/en/">
+<link rel="alternate" hreflang="x-default" href="https://robertasta.github.io/ingute/en/">
 <style>
   :root{
     --bg:#010d24; --bg2:#06173a; --card:#0b1f47;
@@ -53,9 +56,13 @@
   footer{padding:36px 0 48px;text-align:center;color:var(--muted);font-size:.92rem;border-top:1px solid var(--line)}
   footer .sig{color:var(--amber);font-style:italic;margin-top:6px}
   footer .di{font-size:.85rem;margin-top:10px}
+  .kalba{display:flex;justify-content:flex-end;gap:8px;padding-top:16px;font-size:.92rem;color:var(--muted)}
+  .kalba b{color:var(--amber)}
 </style>
 </head>
 <body>
+
+<nav class="kalba wrap" aria-label="Language / Kalba"><b>LT</b> · <a href="en/" hreflang="en" lang="en">EN</a></nav>
 
 <header class="wrap">
   <img class="baneris" src="baneris.png" alt="Ingutė — lietuviškas balsas Piper sintezatoriui (iliustracija sukurta naudojant DI)">
@@ -66,7 +73,6 @@
     <a class="btn btn-amber" href="https://huggingface.co/RobertasTa/lt_LT-ingute-medium">Atsisiųsti balsą</a>
     <a class="btn btn-ghost" href="https://github.com/RobertasTa/ingute">Kodas GitHub'e</a>
   </div>
-  <p class="lang">In English: <a href="https://github.com/RobertasTa/ingute/blob/main/README_EN.md">README_EN.md</a></p>
 </header>
 
 <section class="wrap">
