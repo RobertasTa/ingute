@@ -96,8 +96,23 @@
     <div class="card"><h3>Skaičiai teisingais linksniais</h3><p>„Susitinkam 15:00“, „nuo 2000 eurų“, „25 °C“ — skaičiai, laikas, matai ir santrumpos išplečiami į žodžius prieš sintezę, o ne skaitomi po skaitmenį.</p></div>
     <div class="card"><h3>Dvi sesės, vienas įrankių rinkinys</h3><p>Ingutė su Reginute dalijasi fonemizatoriumi, žodynu ir sintezės apvalkalu, bet kalba savo balsu. Abiem tinka tas pats kodas — keičiasi tik modelis ir jo konfigas.</p></div>
     <div class="card"><h3>Piper kataloge</h3><p>Nuo 2026-10-20 Ingutė yra oficialiame Piper kataloge. Home Assistant Piper priede ji turėtų atsirasti, kai išeis Piper 1.9.0 su lietuvišku fonemizatoriumi. Iki tol — per Wyoming serverį iš repo, apie 5 minutes (README, skyrius „Home Assistant").</p></div>
-    <div class="card"><h3>O ausys?</h3><p>Kad su namais kalbėtumėtės lietuviškai, reikia ir ausų. <a href="https://github.com/RobertasTa/lt-ausys">LT_ausys</a> — Kristijono Jakubsono <i>kmynas</i>, mūsų perkeltas į ONNX: komandą atpažįsta per 0,21 s be vaizdo plokštės ir prijungiamas tuo pačiu Wyoming keliu.</p></div>
     <div class="card"><h3>Laisva naudoti</h3><p>Laisvai ir nemokamai; licencija nedraudžia ir komercinio naudojimo. Platindami balsą, perduokite <code>LICENSE-VOICE</code> ir nurodykite kilmę. Prieš dėdami į savo produktą, perskaitykite visą licenciją.</p></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Naujiena: lietuviškos ausys — LT_ausys</h2>
+  <p>Balso asistentui reikia dviejų pusių: <b>burnos</b> ir <b>ausų</b>. Nuo 2026-10-24 turim ausis, kurios greitos ant paprasto
+  procesoriaus: <a href="https://github.com/RobertasTa/lt-ausys"><b>LT_ausys</b></a>. Tai <b>Kristijono Jakubsono</b> modelis
+  <i>kmynas</i> (NVIDIA Parakeet, mokytas su LIEPA-3), mūsų perkeltas į ONNX ir suspaustas, kad suktųsi be vaizdo plokštės.
+  Modelis — <a href="https://huggingface.co/RobertasTa/lt-ausys">Hugging Face</a>, licencija CC BY 4.0.</p>
+  <div class="grid">
+    <div class="card"><h3>Žaibiškai</h3><p>Balso komandą atpažįsta per 0,21 s. Whisper šeimos modeliai (ir Paprika) tame pačiame mini PC užtrunka 3,55 s: jie kiekvienai, net trumpiausiai frazei koduoja 30 sekundžių langą.</p></div>
+    <div class="card"><h3>Be vaizdo plokštės</h3><p>Užtenka 4 procesoriaus branduolių ir 4 GB atminties — mini PC ar Proxmox konteinerio. Modelis — 0,9 GB.</p></div>
+    <div class="card"><h3>Tiksliau</h3><p>Skaitomoje kalboje (FLEURS) klysta 10,6 % žodžių, Paprika — 12,0 %. Home Assistant numatytasis Whisper <i>base</i> lietuviškai — 88 %.</p></div>
+    <div class="card"><h3>Namie, ne debesyje</h3><p>Viskas sukasi jūsų kompiuteryje, niekur nieko nesiunčiama. Home Assistant ausis prijungia tuo pačiu Wyoming keliu kaip ir balsą.</p></div>
+    <div class="card"><h3>Kitas variklis — kitaip paleidžiama</h3><p>Paprika yra Whisper: ją leidžia <code>faster-whisper</code>, tas pats variklis, kurį naudoja įprastas Home Assistant Whisper priedas. LT_ausys — kito tipo modelis (Parakeet, ONNX), ir to priedo jis savaime nesiūlo: mūsų pasiūlymas tai pridėti dar laukia peržiūros. Todėl ausys leidžiamos savu mažu Wyoming serveriu (Python aplinka arba Docker, apie 5 minutes, <a href="https://github.com/RobertasTa/lt-ausys/blob/main/README_lt.md#b-wyoming-serveris-bet-koks-linux-išbandyta-proxmox-lxc-konteineryje">receptas</a>) ir Home Assistant pridedamos kaip atskira Wyoming tarnyba. Paprika gali likti šalia kaip atsarga.</p></div>
+    <div class="card"><h3>Mūsų namuose</h3><p>Nuo 2026-10-24 jomis klauso mūsų kolonėlė Alisa. Pirmą parą — 13 komandų iš 13, kiekviena per ~0,3 s, šeimininko balso papildomai nemokant. Tai vienų namų patirtis, ne matavimas.</p></div>
   </div>
 </section>
 
